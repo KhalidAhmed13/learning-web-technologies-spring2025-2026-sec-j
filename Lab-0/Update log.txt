@@ -1,0 +1,8 @@
+1.Created a git repositorie name "learning-web-technologies-spring2025-2026-sec-j"
+2.configure using git Email and git User name
+3.Create a text file
+4.Push that text file with commit message "First Commit"
+5.Create a html file name "Student" then create a table with 4 column(NAME, ID, CGPA, EAMIL) and insert values.
+6.Push that html file with commit message "Student Info"
+7.Create a another html file name "Registration".
+8.Push the folder Name "Lab-0"
