@@ -1,0 +1,45 @@
+<company>
+
+    <employee>
+    <id>1</id>
+        <fstName>John</fstName>
+        <lastName>Doe</lastName>
+        <address>
+            <houseNo>38</houseNo>
+            <road>3</road>
+            <city>Banani</city>
+            <state>Dhaka</state>
+        </address>
+        <department>Sales</department>
+        <salary>20000</salary>
+    </employee>
+
+    <employee>
+        <fstName>Mark</fstName>
+        <lastName>Zuckerberg</lastName>
+        <address>
+            <faltNo>a/1</faltNo>
+            <houseNo>20</houseNo>
+            <road>18</road>
+            <city>Mirpur</city>
+            <state>Dhaka</state>
+        </address>
+        <department>Accounts</department>
+        <salary>12000</salary>
+    </employee>
+
+        <employee>
+        <id>3</id>
+        <fstName>Ala</fstName>
+        <lastName>Voski</lastName>
+        <address>
+            <houseNo>38</houseNo>
+            <road>3</road>
+            <city>Motijheel</city>
+        </address>
+        <department>Accounts</department>
+        <salary>30000</salary>
+    </employee>
+
+
+</company>

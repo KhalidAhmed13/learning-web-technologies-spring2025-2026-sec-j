@@ -1,8 +1,9 @@
 <admissions>
+
     <admission>
         <sln>23</sln>
-        <name>John Carter</name>
-
+        <fstName>John</fstName>
+        <lastName>Carter</lastName>
         <admissionDate>
         <day>25</day>
         <month>12</month>
@@ -11,23 +12,22 @@
 
     </admission>
 
-        <admission>
+    <admission>
         <sln>29</sln>
-        <name>Bob Marshal</name>
-
+        <fstName>Bob</fstName>
+        <lastName>Marshal</lastName>
         <admissionDate>
         <day>13</day>
         <month>01</month>
         <year>1999</year>
         </admissionDate>
-        
-        </admission>
-
     </admission>
 
-        <admission>
+
+      <admission>
         <sln>35</sln>
-        <name>Clark Kent</name>
+        <fstName>Clark</fstName>
+        <lastName>Kent</lastName>
 
         <admissionDate>
         <day>17</day>
@@ -35,6 +35,6 @@
         <year>2005</year>
         </admissionDate>
         
-        </admission>
+      </admission>
 
 </admissions>
