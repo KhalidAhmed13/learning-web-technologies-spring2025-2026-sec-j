@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration</title>
+</head>
+<body>
+
+  <h2>Registration Form</h2>
+
+  <table cellpadding="6">
+    <tr>
+      <td><b>NAME</b></td>
+      <td><input type="text" name="name" placeholder="Enter your name"></td>
+    </tr>
+
+    <tr>
+      <td>ID</td>
+      <td><input type="text" name="id" placeholder="Enter your student ID"></td>
+    </tr>
+
+    <tr>
+      <td>Email</td>
+      <td><input type="email" name="email" placeholder="Enter your email"></td>
+    </tr>
+
+    <tr>
+      <td>Password</td>
+      <td><input type="password" name="password" placeholder="Enter your password"></td>
+    </tr>
+
+    <tr>
+      <td>Phone</td>
+      <td><input type="tel" name="phone" placeholder="Enter your phone number"></td>
+    </tr>
+
+    <tr>
+      <td>Date of Birth</td>
+      <td><input type="date" name="dob"></td>
+    </tr>
+
+    <tr>
+      <td>Department</td>
+      <td>
+        <select name="department">
+          <option value="">Select your department</option>
+          <option value="cse">CSE</option>
+          <option value="eee">EEE</option>
+          <option value="bba">BBA</option>
+          <option value="eng">English</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td>CGPA</td>
+      <td><input type="text" name="cgpa" placeholder="Enter your CGPA"></td>
+    </tr>
+
+
+    <tr>
+      <td>Address</td>
+      <td><input type="text" name="address" placeholder="Enter your address"></td>
+    </tr>
+
+    <tr>
+      <td>Gender</td>
+      <td>
+        Male <input type="radio" name="gender" value="male">
+        Female <input type="radio" name="gender" value="female">
+        Other <input type="radio" name="gender" value="other">
+      </td>
+    </tr>
+
+    <tr>
+      <td>Skills</td>
+      <td>
+        <input type="checkbox" name="skill_html" value="html"> HTML
+        <input type="checkbox" name="skill_css" value="css"> CSS
+        <input type="checkbox" name="skill_js" value="js"> JavaScript
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <input type="checkbox" name="terms">
+        Accepted all terms and conditions
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="Register">
+        <input type="reset" value="Clear">
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
