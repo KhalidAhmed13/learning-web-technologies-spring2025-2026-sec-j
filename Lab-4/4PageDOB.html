@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Date of Birth</title>
+  <script>
+    function validateDOBForm() 
+    {
+      const ddInput = document.getElementById("dd");
+      const mmInput = document.getElementById("mm");
+      const yyyyInput = document.getElementById("yyyy");
+
+      const ddStr = ddInput.value.trim();
+      const mmStr = mmInput.value.trim();
+      const yyyyStr = yyyyInput.value.trim();
+
+      //Cannot be empty
+      if (ddStr.length === 0 || mmStr.length === 0 || yyyyStr.length === 0) {
+        alert("Date of Birth cannot be empty. Please fill dd, mm, and yyyy.");
+        (ddStr.length === 0 ? ddInput : (mmStr.length === 0 ? mmInput : yyyyInput)).focus();
+        return false;
+      }
+
+      //Must be a valid number (dd: 0-31, mm: 1-12, yyyy: 1900-2016)
+      if (!/^\d+$/.test(ddStr) || !/^\d+$/.test(mmStr) || !/^\d+$/.test(yyyyStr)) {
+        alert("Date of Birth must contain positive numbers only (dd/mm/yyyy).");
+        return false;
+      }
+
+      const dd = parseInt(ddStr, 10);
+      const mm = parseInt(mmStr, 10);
+      const yyyy = parseInt(yyyyStr, 10);
+
+      if (dd < 0 || dd > 31) 
+      {
+        alert("Day (dd) must be between 0 and 31.");
+        ddInput.focus();
+        return false;
+      }
+      if (mm < 1 || mm > 12) 
+      {
+        alert("Month (mm) must be between 1 and 12.");
+        mmInput.focus();
+        return false;
+      }
+      if (yyyy < 1900 || yyyy > 2016) 
+      {
+        alert("Year (yyyy) must be between 1900 and 2016.");
+        yyyyInput.focus();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <form method="get" action="5PageDegree.html" onsubmit="return validateDOBForm();">
+    Date of Birth<br />
+    <input type="text" id="dd" name="dd" size="2" placeholder="dd" />
+    <input type="text" id="mm" name="mm" size="2" placeholder="mm" />
+    <input type="text" id="yyyy" name="yyyy" size="4" placeholder="yyyy" />
+    <br /><br />
+    <input type="submit" value="Next" />
+  </form>
+
+  <br />
+  <a href="3PageGender.html">Back</a>
+
+</body>
+</html>

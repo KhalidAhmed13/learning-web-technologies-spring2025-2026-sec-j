@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Person Profile</title>
+  <script>
+    function validateName(nameInput) 
+    {
+      const name = nameInput.value.trim();
+      if (name.length === 0) return "Name cannot be empty.";
+      if (!/^[A-Za-z]/.test(name)) return "Name must start with a letter (A-Z or a-z).";
+      if (!/^[A-Za-z][A-Za-z.\- ]*$/.test(name)) return "Name can contain only letters, spaces, dot (.), and dash (-).";
+      const words = name.split(/\s+/).filter(Boolean);
+      if (words.length < 2) return "Name must contain at least two words.";
+      return "";
+    }
+
+    function validateEmail(emailInput) 
+    {
+      const email = emailInput.value.trim();
+      if (email.length === 0) return "Email cannot be empty.";
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailRegex.test(email)) return "Please enter a valid email address (khalid@gamil.com).";
+      return "";
+    }
+
+    function validateGender() 
+    {
+      const selected = document.querySelector('input[name="gender"]:checked');
+      if (!selected) return "Please select a gender.";
+      return "";
+    }
+
+    function validateDOB(ddInput, mmInput, yyyyInput) 
+    {
+      const ddStr = ddInput.value.trim();
+      const mmStr = mmInput.value.trim();
+      const yyyyStr = yyyyInput.value.trim();
+
+      if (ddStr.length === 0 || mmStr.length === 0 || yyyyStr.length === 0) {
+        return "Date of Birth cannot be empty. Please fill dd, mm, and yyyy.";
+      }
+      if (!/^\d+$/.test(ddStr) || !/^\d+$/.test(mmStr) || !/^\d+$/.test(yyyyStr)) 
+      {
+        return "Date of Birth must contain numbers only (dd/mm/yyyy).";
+      }
+
+      const dd = parseInt(ddStr, 10);
+      const mm = parseInt(mmStr, 10);
+      const yyyy = parseInt(yyyyStr, 10);
+
+      if (dd < 0 || dd > 31) return "Day (dd) must be between 0 and 31.";
+      if (mm < 1 || mm > 12) return "Month (mm) must be between 1 and 12.";
+      if (yyyy < 1900 || yyyy > 2016) return "Year (yyyy) must be between 1900 and 2016.";
+
+      return "";
+    }
+
+    function validateBlood(bloodSelect) 
+    {
+      if (bloodSelect.value === "") return "Please select a blood group.";
+      return "";
+    }
+
+    function validateDegree() 
+    {
+      const anyChecked =
+        document.getElementById("ssc").checked ||
+        document.getElementById("hsc").checked ||
+        document.getElementById("bsc").checked ||
+        document.getElementById("msc").checked;
+      if (!anyChecked) return "Please select at least one degree (SSC/HSC/BSc/MSc).";
+      return "";
+    }
+
+    function validatePhoto(photoInput) 
+    {
+      if (photoInput.value.trim().length === 0) return "Please choose a photo.";
+      return "";
+    }
+
+    function validatePersonProfileForm() 
+    {
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const ddInput = document.getElementById("dd");
+      const mmInput = document.getElementById("mm");
+      const yyyyInput = document.getElementById("yyyy");
+      const bloodSelect = document.getElementById("blood");
+      const photoInput = document.getElementById("photo");
+
+      let msg = "";
+
+      msg = validateName(nameInput);
+      if (msg) { alert(msg); nameInput.focus(); return false; }
+
+      msg = validateEmail(emailInput);
+      if (msg) { alert(msg); emailInput.focus(); return false; }
+
+      msg = validateGender();
+      if (msg) { alert(msg); return false; }
+
+      msg = validateDOB(ddInput, mmInput, yyyyInput);
+      if (msg) { alert(msg); (ddInput.value.trim()===""?ddInput:(mmInput.value.trim()===""?mmInput:yyyyInput)).focus(); return false; }
+
+      msg = validateBlood(bloodSelect);
+      if (msg) { alert(msg); bloodSelect.focus(); return false; }
+
+      msg = validateDegree();
+      if (msg) { alert(msg); return false; }
+
+      msg = validatePhoto(photoInput);
+      if (msg) { alert(msg); photoInput.focus(); return false; }
+
+      alert("All validations passed successfully!");
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <form method="get" onsubmit="return validatePersonProfileForm();">
+    <table border="1" width="70%" align="center" cellpadding="8">
+      <tr>
+        <td colspan="2" align="center"><b>PERSON PROFILE</b></td>
+      </tr>
+
+      <tr>
+        <td>Name</td>
+        <td><input type="text" id="name" name="name" placeholder="Enter your name" /></td>
+      </tr>
+
+      <tr>
+        <td>Email</td>
+        <td><input type="email" id="email" name="email" placeholder="Enter your email" /></td>
+      </tr>
+
+      <tr>
+        <td>Gender</td>
+        <td>
+          <label><input type="radio" name="gender" value="Male" /> Male</label>
+          <label><input type="radio" name="gender" value="Female" /> Female</label>
+          <label><input type="radio" name="gender" value="Other" /> Other</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Date of Birth</td>
+        <td>
+          <input type="text" id="dd" name="dd" size="2" placeholder="dd" /> /
+          <input type="text" id="mm" name="mm" size="2" placeholder="mm" /> /
+          <input type="text" id="yyyy" name="yyyy" size="4" placeholder="yyyy" />
+          <span style="color:#f60303;"> (dd/mm/yyyy)</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Blood Group</td>
+        <td>
+          <select id="blood" name="blood">
+            <option value="">-- Select --</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Degree</td>
+        <td>
+          <label><input type="checkbox" id="ssc" name="ssc" value="SSC" /> SSC</label>
+          <label><input type="checkbox" id="hsc" name="hsc" value="HSC" /> HSC</label>
+          <label><input type="checkbox" id="bsc" name="bsc" value="BSc" /> BSc</label>
+          <label><input type="checkbox" id="msc" name="msc" value="MSc" /> MSc</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Photo</td>
+        <td><input type="file" id="photo" name="photo" /></td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="center">
+          <input type="submit" value="Submit" />
+          <input type="reset" value="Reset" />
+        </td>
+      </tr>
+    </table>
+  </form>
+
+</body>
+</html>

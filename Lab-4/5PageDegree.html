@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Degree</title>
+  <script>
+    function validateDegreeForm() 
+    {
+      //At least one of them has to be selected
+      const anyChecked =
+        document.getElementById("ssc").checked ||
+        document.getElementById("hsc").checked ||
+        document.getElementById("bsc").checked ||
+        document.getElementById("msc").checked;
+
+      if (!anyChecked) 
+      {
+        alert("Please select at least one degree (SSC/HSC/BSc/MSc).");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <form method="get" action="6PageBloodgroup.html" onsubmit="return validateDegreeForm();">
+    Degree<br />
+    <label><input type="checkbox" id="ssc" name="ssc" value="SSC" /> SSC</label>
+    <label><input type="checkbox" id="hsc" name="hsc" value="HSC" /> HSC</label>
+    <label><input type="checkbox" id="bsc" name="bsc" value="BSc" /> BSc</label>
+    <label><input type="checkbox" id="msc" name="msc" value="MSc" /> MSc</label>
+    <br /><br />
+    <input type="submit" value="Next" />
+  </form>
+
+  <br />
+  <a href="4PageDOB.html">Back</a>
+
+</body>
+</html>

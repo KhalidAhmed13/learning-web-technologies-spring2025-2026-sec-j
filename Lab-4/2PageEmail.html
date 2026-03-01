@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Email</title>
+<style>
+    body { font-family: "Times New Roman", serif; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    input[type="text"] { width: 320px; height: 26px; }
+
+    /* Info icon + tooltip */
+    .info-wrap { position: relative; display: inline-block; }
+    .info-icon {
+      width: 22px; height: 22px;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      border: 1px solid #1e5bd9;
+      color: #1e5bd9;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+      cursor: default;
+      user-select: none;
+      background: #fff;
+    }
+    .tooltip {
+      position: absolute;
+      left: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1px solid #999;
+      background: #fff;
+      padding: 6px 10px;
+      white-space: nowrap;
+      display: none;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    .info-wrap:hover .tooltip { display: block; }
+  </style>
+
+  <script>
+    function validateEmailForm() 
+    {
+      const emailInput = document.getElementById("email");
+      const email = emailInput.value.trim();
+
+      //Cannot be empty
+      if (email.length === 0) 
+      {
+        alert("Email cannot be empty.");
+        emailInput.focus();
+        return false;
+      }
+
+      //Must be a valid email address (anything@example.com)
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailRegex.test(email)) 
+      {
+        alert("Please enter a valid email address (khalid@gamil.com).");
+        emailInput.focus();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <form method="get" action="3PageGender.html" onsubmit="return validateEmailForm();">
+<div style="font-size: 20px; margin-bottom: 0px;">Email</div>
+
+    <div class="row">
+      <input type="email" id="email" name="email" placeholder="Enter your email" />
+
+      <span class="info-wrap">
+        <span class="info-icon">i</span>
+        <span class="tooltip">hint: khalid@gmail.com</span>
+      </span>
+    </div>
+    <br />
+    <input type="submit" value="Next" />
+  </form>
+  <br />
+  <a href="1PageName.html">Back</a>
+
+</body>
+</html>

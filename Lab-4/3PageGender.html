@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Gender</title>
+  <script>
+    function validateGenderForm() 
+    {
+      //At least one of them has to be selected
+      const selected = document.querySelector('input[name="gender"]:checked');
+      if (!selected) {
+        alert("Please select a gender.");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <form method="get" action="4PageDOB.html" onsubmit="return validateGenderForm();">
+    Gender<br />
+    <label><input type="radio" name="gender" value="Male" /> Male</label>
+    <label><input type="radio" name="gender" value="Female" /> Female</label>
+    <label><input type="radio" name="gender" value="Other" /> Other</label>
+    <br /><br />
+    <input type="submit" value="Next" />
+  </form>
+
+  <br />
+  <a href="2PageEmail.html">Back</a>
+
+</body>
+</html>

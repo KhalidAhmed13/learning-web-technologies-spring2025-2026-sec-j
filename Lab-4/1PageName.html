@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Name</title>
+  <script>
+    function validateNameForm() 
+    {
+      const nameInput = document.getElementById("name");
+      const name = nameInput.value.trim();
+
+      //Cannot be empty
+      if (name.length === 0) 
+      {
+        alert("Name cannot be empty.");
+        nameInput.focus();
+        return false;
+      }
+
+      //Must start with a letter
+      if (!/^[A-Za-z]/.test(name)) 
+      {
+        alert("Name must start with a letter (A-Z or a-z).");
+        nameInput.focus();
+        return false;
+      }
+
+      //Can contain a-z or A-Z or dot(.) or dash(-)
+      // (spaces are allowed between words)
+      if (!/^[A-Za-z][A-Za-z.\- ]*$/.test(name)) 
+      {
+        alert("Name can contain only letters, spaces, dot (.), and dash (-).");
+        nameInput.focus();
+        return false;
+      }
+
+      //Contains at least two words
+      const words = name.split(/\s+/).filter(Boolean);
+      if (words.length < 2) 
+      {
+        alert("Name must contain at least two words.");
+        nameInput.focus();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+  <form method="get" action="2PageEmail.html" onsubmit="return validateNameForm();">
+    Name<br />
+    <input type="text" id="name" name="name" placeholder="Enter your name" />
+    <br /><br />
+    <input type="submit" value="Next" />
+  </form>
+
+</body>
+</html>
