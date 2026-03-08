@@ -1,0 +1,143 @@
+:root {
+  --bg: #0b0b2f;
+  --panel: #11113d;
+  --screen-text: #eef0ff;
+  --result: #d79bd6;
+  --btn-dark: #27216e;
+  --btn-mid: #4f49ca;
+  --btn-ac: #8ea3ff;
+  --btn-equals: #f1a6dd;
+  --btn-text: #e8eaff;
+  --shadow: rgba(0, 0, 0, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #06061d 0%, #12124a 100%);
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.phone-shell {
+  width: min(100%, 430px);
+}
+
+.calculator {
+  background: var(--bg);
+  border-radius: 28px;
+  padding: 20px 16px 18px;
+  box-shadow: 0 18px 50px var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.screen {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 12px 8px 18px;
+}
+
+.expression,
+.result {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expression {
+  font-size: clamp(28px, 8vw, 56px);
+  color: var(--screen-text);
+  text-align: left;
+  min-height: 68px;
+}
+
+.result {
+  font-size: clamp(22px, 5vw, 34px);
+  color: var(--result);
+  text-align: right;
+  min-height: 32px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.btn {
+  border: 0;
+  min-height: 72px;
+  border-radius: 24px;
+  color: var(--btn-text);
+  font-size: 2rem;
+  cursor: pointer;
+  background: var(--btn-dark);
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-number {
+  background: var(--btn-dark);
+}
+
+.btn-func,
+.btn-operator {
+  background: var(--btn-mid);
+}
+
+.btn-ac {
+  background: var(--btn-ac);
+  color: #1b1d55;
+}
+
+.btn-equals {
+  background: var(--btn-equals);
+  color: #422145;
+}
+
+@media (max-width: 430px) {
+  body {
+    padding: 0;
+  }
+
+  .phone-shell {
+    width: 100%;
+  }
+
+  .calculator {
+    min-height: 100vh;
+    border-radius: 0;
+    padding-top: 22px;
+  }
+
+  .screen {
+    min-height: 220px;
+  }
+
+  .btn {
+    min-height: 68px;
+    font-size: 1.85rem;
+  }
+}
