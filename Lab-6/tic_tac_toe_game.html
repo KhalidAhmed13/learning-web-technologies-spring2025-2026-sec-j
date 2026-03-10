@@ -34,6 +34,30 @@
       font-size: 2rem;
     }
 
+    .scoreboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .score-box {
+      background: #f3f4f6;
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .score-box span {
+      display: block;
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .score-box strong {
+      font-size: 1.3rem;
+    }
+
     .status {
       margin-bottom: 18px;
       padding: 12px;
@@ -63,7 +87,7 @@
       font-size: clamp(2rem, 8vw, 3.2rem);
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.2s ease;
+      transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
     }
 
     .cell:hover:not(:disabled) {
@@ -71,23 +95,67 @@
       background: #eff6ff;
     }
 
+    .cell:disabled {
+      cursor: not-allowed;
+    }
+
     .cell.x {
       color: #2563eb;
+      animation: pop 0.18s ease;
     }
 
     .cell.o {
       color: #dc2626;
+      animation: pop 0.18s ease;
     }
 
-    .reset-btn {
+    .cell.winner {
+      background: #dcfce7;
+      box-shadow: inset 0 0 0 2px #22c55e;
+      transform: scale(1.03);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button.action-btn {
       border: none;
       border-radius: 12px;
       padding: 12px 18px;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    button.action-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .reset-btn {
       background: #2563eb;
       color: #fff;
+    }
+
+    .new-match-btn {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.65);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -95,19 +163,58 @@
   <div class="game-container">
     <h1>Tic-Tac-Toe</h1>
 
+    <div class="scoreboard">
+      <div class="score-box">
+        <span>Player X</span>
+        <strong id="scoreX">0</strong>
+      </div>
+      <div class="score-box">
+        <span>Draws</span>
+        <strong id="scoreDraw">0</strong>
+      </div>
+      <div class="score-box">
+        <span>Player O</span>
+        <strong id="scoreO">0</strong>
+      </div>
+    </div>
+
     <div class="status" id="status">Player X's turn</div>
     <div class="board" id="board"></div>
 
-    <button class="reset-btn" id="resetBtn">Reset Game</button>
+    <div class="actions">
+      <button class="action-btn reset-btn" id="resetBtn">Reset Round</button>
+      <button class="action-btn new-match-btn" id="newMatchBtn">New Match</button>
+    </div>
   </div>
 
   <script>
     const boardElement = document.getElementById('board');
     const statusElement = document.getElementById('status');
     const resetBtn = document.getElementById('resetBtn');
+    const newMatchBtn = document.getElementById('newMatchBtn');
+    const scoreXElement = document.getElementById('scoreX');
+    const scoreOElement = document.getElementById('scoreO');
+    const scoreDrawElement = document.getElementById('scoreDraw');
+
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
 
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
+    let gameActive = true;
+    let scores = {
+      X: 0,
+      O: 0,
+      draw: 0
+    };
 
     function createBoard() {
       boardElement.innerHTML = '';
@@ -120,7 +227,7 @@
 
         if (value === 'X') cell.classList.add('x');
         if (value === 'O') cell.classList.add('o');
-        if (value !== '') cell.disabled = true;
+        if (!gameActive || value !== '') cell.disabled = value !== '' || !gameActive;
 
         cell.addEventListener('click', handleCellClick);
         boardElement.appendChild(cell);
@@ -131,7 +238,7 @@
       const clickedCell = event.target;
       const index = Number(clickedCell.dataset.index);
 
-      if (board[index] !== '') {
+      if (!gameActive || board[index] !== '') {
         return;
       }
 
@@ -140,20 +247,89 @@
       clickedCell.classList.add(currentPlayer.toLowerCase());
       clickedCell.disabled = true;
 
+      const winningLine = checkWinner();
+
+      if (winningLine) {
+        gameActive = false;
+        highlightWinningCells(winningLine);
+        scores[currentPlayer] += 1;
+        updateScores();
+        statusElement.textContent = `Player ${currentPlayer} wins!`;
+        disableAllCells();
+        return;
+      }
+
+      if (checkDraw()) {
+        gameActive = false;
+        scores.draw += 1;
+        updateScores();
+        statusElement.textContent = "It's a draw!";
+        disableAllCells();
+        return;
+      }
+
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
       statusElement.textContent = `Player ${currentPlayer}'s turn`;
     }
 
-    function resetGame() {
+    function checkWinner() {
+      for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+
+        if (
+          board[a] !== '' &&
+          board[a] === board[b] &&
+          board[a] === board[c]
+        ) {
+          return combination;
+        }
+      }
+
+      return null;
+    }
+
+    function checkDraw() {
+      return board.every(cell => cell !== '');
+    }
+
+    function highlightWinningCells(combination) {
+      const cells = document.querySelectorAll('.cell');
+      combination.forEach(index => {
+        cells[index].classList.add('winner');
+      });
+    }
+
+    function disableAllCells() {
+      document.querySelectorAll('.cell').forEach(cell => {
+        cell.disabled = true;
+      });
+    }
+
+    function updateScores() {
+      scoreXElement.textContent = scores.X;
+      scoreOElement.textContent = scores.O;
+      scoreDrawElement.textContent = scores.draw;
+    }
+
+    function resetRound() {
       board = ['', '', '', '', '', '', '', '', ''];
       currentPlayer = 'X';
+      gameActive = true;
       statusElement.textContent = "Player X's turn";
       createBoard();
     }
 
-    resetBtn.addEventListener('click', resetGame);
+    function resetMatch() {
+      scores = { X: 0, O: 0, draw: 0 };
+      updateScores();
+      resetRound();
+    }
+
+    resetBtn.addEventListener('click', resetRound);
+    newMatchBtn.addEventListener('click', resetMatch);
 
     createBoard();
+    updateScores();
   </script>
 </body>
 </html>
