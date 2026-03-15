@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Management Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      padding: 20px;
+    }
+
+    .container {
+      width: min(95vw, 700px);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-row,
+    .product-row,
+    .total-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .header-row {
+      font-weight: 700;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+
+    .product-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .product-name {
+      font-weight: 600;
+    }
+
+    .price-text {
+      font-size: 16px;
+    }
+
+    .quantity-input,
+    .subtotal-input,
+    #grandTotal {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .subtotal-input,
+    #grandTotal {
+      background: #f8fafc;
+      font-weight: bold;
+    }
+
+    .error {
+      min-height: 18px;
+      margin-top: 6px;
+      color: #dc2626;
+      font-size: 13px;
+    }
+
+    .total-row {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 2px solid #dbe3ee;
+      font-weight: 700;
+    }
+
+    .grand-label {
+      grid-column: 1 / 4;
+      text-align: right;
+      padding-right: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .header-row,
+      .product-row,
+      .total-row {
+        grid-template-columns: 1fr;
+      }
+
+      .grand-label {
+        grid-column: auto;
+        text-align: left;
+        padding-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Product Management Page</h1>
+
+    <div class="card">
+      <div class="header-row">
+        <div>Product</div>
+        <div>Unit Price</div>
+        <div>Quantity</div>
+        <div>Subtotal</div>
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Laptop Bag</div>
+        <div class="price-text">1000</div>
+        <div>
+          <input type="number" class="quantity-input" data-price="1000" value="0" min="0" />
+          <div class="error"></div>
+        </div>
+        <div>
+          <input type="text" class="subtotal-input" value="0" readonly />
+        </div>
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Wireless Mouse</div>
+        <div class="price-text">500</div>
+        <div>
+          <input type="number" class="quantity-input" data-price="500" value="0" min="0" />
+          <div class="error"></div>
+        </div>
+        <div>
+          <input type="text" class="subtotal-input" value="0" readonly />
+        </div>
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Keyboard</div>
+        <div class="price-text">800</div>
+        <div>
+          <input type="number" class="quantity-input" data-price="800" value="0" min="0" />
+          <div class="error"></div>
+        </div>
+        <div>
+          <input type="text" class="subtotal-input" value="0" readonly />
+        </div>
+      </div>
+
+      <div class="total-row">
+        <div class="grand-label">Grand Total</div>
+        <input type="text" id="grandTotal" value="0" readonly />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const quantityInputs = document.querySelectorAll(".quantity-input");
+    const subtotalInputs = document.querySelectorAll(".subtotal-input");
+    const errorMessages = document.querySelectorAll(".error");
+    const grandTotalInput = document.getElementById("grandTotal");
+
+    let couponAlertShown = false;
+
+    quantityInputs.forEach(function (input, index) {
+      input.addEventListener("input", function () {
+        updateAllTotals();
+      });
+    });
+
+    updateAllTotals();
+
+    function updateAllTotals() {
+      let grandTotal = 0;
+
+      quantityInputs.forEach(function (input, index) {
+        let quantity = Number(input.value);
+        const unitPrice = Number(input.dataset.price);
+
+        if (quantity < 0 || Number.isNaN(quantity)) {
+          quantity = 0;
+          input.value = 0;
+          errorMessages[index].textContent = "Quantity cannot be below 0.";
+        } else {
+          errorMessages[index].textContent = "";
+        }
+
+        const subtotal = unitPrice * quantity;
+        subtotalInputs[index].value = subtotal;
+        grandTotal += subtotal;
+      });
+
+      grandTotalInput.value = grandTotal;
+
+      if (grandTotal > 1000 && !couponAlertShown) {
+        alert("Congratulations! You are now eligible for a gift coupon.");
+        couponAlertShown = true;
+      }
+
+      if (grandTotal <= 1000) {
+        couponAlertShown = false;
+      }
+    }
+  </script>
+</body>
+</html>
